@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar</title>
+
+<style>
+
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f4f7fb;
+}
+
+/* LAYOUT */
+.container{
+  display:flex;
+  min-height:100vh;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:240px;
+  background:#111827;
+  color:white;
+  padding:20px;
+  flex-shrink:0;
+}
+
+.sidebar h2{
+  margin-bottom:20px;
+}
+
+.sidebar ul{
+  list-style:none;
+}
+
+.sidebar ul li{
+  margin-bottom:10px;
+}
+
+.sidebar ul li a{
+  color:white;
+  text-decoration:none;
+  display:block;
+  padding:10px;
+  border-radius:8px;
+}
+
+.sidebar ul li.active,
+.sidebar ul li a:hover{
+  background:#2563eb;
+}
+
+/* MAIN */
+.main-content{
+  flex:1;
+  padding:20px;
+  width:100%;
+}
+
+/* CALENDAR BOX */
+.calendar-box{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+  width:100%;
+  overflow:hidden;
+}
+
+/* GRID FIX */
+.calendar-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:10px;
+  margin-top:20px;
+  width:100%;
+}
+
+/* DAY CELL */
+.day{
+  background:#f3f4f6;
+  padding:15px;
+  text-align:center;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.2s;
+
+  /* IMPORTANT FIX */
+  aspect-ratio:1/1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.day:hover{
+  background:#2563eb;
+  color:white;
+}
+
+/* RESULT BOX */
+.result-box{
+  margin-top:20px;
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+.meeting-item{
+  padding:10px;
+  border-bottom:1px solid #eee;
+}
+
+.no-meeting{
+  color:gray;
+}
+
+/* ===================== */
+/* MOBILE RESPONSIVE FIX */
+/* ===================== */
+@media(max-width:768px){
+
+.container{
+  flex-direction:column;
+}
+
+/* sidebar becomes top block */
+.sidebar{
+  width:100%;
+  text-align:center;
+}
+
+/* grid smaller spacing */
+.calendar-grid{
+  gap:5px;
+}
+
+/* smaller day boxes */
+.day{
+  padding:10px;
+  font-size:14px;
+}
+
+.main-content{
+  padding:15px;
+}
+
+.calendar-box{
+  padding:15px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+<h2>ProMeet</h2>
+
+<ul>
+<li><a href="index.html">Dashboard</a></li>
+<li><a href="meetings.html">Meetings</a></li>
+<li class="active"><a href="calendar.html">Calendar</a></li>
+<li><a href="settings.html">Settings</a></li>
+</ul>
+
+</div>
+
+<!-- MAIN -->
+<div class="main-content">
+
+<h1>Calendar</h1>
+<p>Click a day to see meetings</p>
+
+<div class="calendar-box">
+
+<h2>June 2026</h2>
+
+<div class="calendar-grid" id="calendar"></div>
+
+</div>
+
+<div class="result-box" id="resultBox">
+<p class="no-meeting">Select a date</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let meetings = JSON.parse(localStorage.getItem("meetings")) || [];
+
+const calendar = document.getElementById("calendar");
+
+for(let i=1;i<=30;i++){
+
+const date = `2026-06-${String(i).padStart(2,"0")}`;
+
+const div = document.createElement("div");
+div.className = "day";
+div.innerText = i;
+
+div.onclick = () => showMeetings(date);
+
+calendar.appendChild(div);
+}
+
+function showMeetings(date){
+
+const box = document.getElementById("resultBox");
+
+const result = meetings.filter(m => m.date === date);
+
+box.innerHTML = `<h3>${date}</h3><br>`;
+
+if(result.length === 0){
+  box.innerHTML += `<p class="no-meeting">No meetings found</p>`;
+  return;
+}
+
+result.forEach(m=>{
+  box.innerHTML += `
+    <div class="meeting-item">
+      <strong>${m.title}</strong><br>
+      <small>${m.time}</small>
+    </div>
+  `;
+});
+
+}
+
+</script>
+
+</body>
+</html>

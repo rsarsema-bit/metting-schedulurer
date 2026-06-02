@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Today's Meetings</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      body {
+        background-image: url("mm.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        padding: 120px;
+      }
+      .container {
+        max-width: 1200px;
+        margin: auto;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 25px;
+        gap: 10px;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      .date-box {
+        background: #4f46e5;
+        color: rgba(0, 0, 0, 0.825);
+        padding: 120px 18px;
+        border-radius: 10px;
+        font-weight: bold;
+      }
+
+      .ards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card h3 {
+        color: #4f46e5;
+        margin-bottom: 10px;
+      }
+
+      .card p {
+        margin-bottom: 8px;
+        color: #555;
+      }
+
+      .status {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        color: rgba(12, 0, 0, 0.937);
+        font-size: 14px;
+        margin-top: 8px;
+      }
+
+      .scheduled {
+        background: #f59e0b;
+      }
+
+      .completed {
+        background: #10b981;
+      }
+
+      .actions {
+        margin-top: 15px;
+        display: flex;
+        gap: 10px;
+      }
+
+      button {
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        color: rgba(255, 255, 255, 0.078);
+        cursor: pointer;
+      }
+
+      .complete-btn {
+        background: #10b981;
+      }
+
+      .delete-btn {
+        background: #ef4444;
+      }
+
+      .empty {
+        text-align: center;
+        background: rgba(0, 0, 0, 0.771);
+        padding: 40px;
+        border-radius: 15px;
+        color: #777;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+
+        button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Today's Meetings</h1>
+
+        <div class="date-box" id="todayDate">Today's Date</div>
+      </div>
+
+      <div id="meetingContainer" class="cards"></div>
+    </div>
+
+    <script>
+      const today = new Date().toISOString().split("T")[0];
+
+      document.getElementById("todayDate").textContent = today;
+
+      let meetings = JSON.parse(localStorage.getItem("meetings")) || [];
+
+      function renderTodayMeetings() {
+        const container = document.getElementById("meetingContainer");
+
+        container.innerHTML = "";
+
+        const todaysMeetings = meetings.filter(
+          (meeting) => meeting.date === today,
+        );
+
+        if (todaysMeetings.length === 0) {
+          container.innerHTML = `
+<div class="empty">
+<h2>No meetings scheduled for today</h2>
+<p>Enjoy your free time!</p>
+</div>
+`;
+
+          return;
+        }
+
+        todaysMeetings.forEach((meeting) => {
+          const originalIndex = meetings.findIndex(
+            (m) =>
+              m.title === meeting.title &&
+              m.date === meeting.date &&
+              m.time === meeting.time,
+          );
+
+          container.innerHTML += `
+
+<div class="card">
+
+<h3>${meeting.title}</h3>
+
+<p><strong>Date:</strong> ${meeting.date}</p>
+
+<p><strong>Time:</strong> ${meeting.time}</p>
+
+<span class="status ${
+            meeting.status === "Completed" ? "completed" : "scheduled"
+          }">
+${meeting.status}
+</span>
+
+<div class="actions">
+
+<button
+class="complete-btn"
+onclick="completeMeeting(${originalIndex})">
+Complete
+</button>
+
+<button
+class="delete-btn"
+onclick="deleteMeeting(${originalIndex})">
+Delete
+</button>
+
+</div>
+
+</div>
+
+`;
+        });
+      }
+
+      function completeMeeting(index) {
+        meetings[index].status = "Completed";
+
+        localStorage.setItem("meetings", JSON.stringify(meetings));
+
+        renderTodayMeetings();
+      }
+
+      function deleteMeeting(index) {
+        if (confirm("Delete this meeting?")) {
+          meetings.splice(index, 1);
+
+          localStorage.setItem("meetings", JSON.stringify(meetings));
+
+          renderTodayMeetings();
+        }
+      }
+
+      renderTodayMeetings();
+    </script>
+  </body>
+</html>
