@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Members</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+     background-image: url("yours.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        padding: 120px;
+    
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:25px;
+}
+
+h1{
+    color:#000000f1;
+}
+
+.stats{
+    background:#00000000;
+    color:rgba(20, 9, 9, 0);
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.controls{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:25px;
+}
+
+input{
+    flex:1;
+    min-width:250px;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+button{
+    border:none;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    color:rgba(0, 0, 0, 0.219);
+}
+
+.add-btn{
+    background:#10b981;
+}
+
+.edit-btn{
+    background:#f59e0b;
+}
+
+.delete-btn{
+    background:#ef4444;
+}
+
+.member-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.member-card{
+    background:rgba(59, 23, 23, 0.507);
+    border-radius:15px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.member-card:hover{
+    transform:translateY(-5px);
+}
+
+.avatar{
+    width:80px;
+    height:80px;
+    margin:auto;
+    border-radius:50%;
+    background:#4f46e5;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.member-card h3{
+    color:#fffefe;
+    margin-bottom:8px;
+}
+
+.member-card p{
+    color:#666;
+    margin-bottom:15px;
+}
+
+.actions{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+@media(max-width:768px){
+
+.controls{
+    flex-direction:column;
+}
+
+input,
+button{
+    width:100%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>Team Members</h1>
+
+<div class="stats">
+Total Members:
+<span id="memberCount">0</span>
+</div>
+
+</div>
+
+<div class="controls">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search member...">
+
+<button
+class="add-btn"
+onclick="addMember()">
+Add Member
+</button>
+
+</div>
+
+<div
+class="member-grid"
+id="memberGrid">
+</div>
+
+</div>
+
+<script>
+
+if(!localStorage.getItem("members")){
+
+localStorage.setItem(
+"members",
+JSON.stringify([
+{
+name:"Arsema",
+role:"Project Manager"
+},
+{
+name:"Alemtsahay",
+role:"Frontend Developer"
+},
+{
+name:"Aster",
+role:"UI/UX Designer"
+},
+{
+name:"Biftu",
+role:"Backend Developer"
+}
+])
+);
+
+}
+
+let members =
+JSON.parse(
+localStorage.getItem("members")
+);
+
+function saveMembers(){
+
+localStorage.setItem(
+"members",
+JSON.stringify(members)
+);
+
+}
+
+function renderMembers(){
+
+const grid =
+document.getElementById("memberGrid");
+
+grid.innerHTML = "";
+
+document.getElementById("memberCount")
+.textContent = members.length;
+
+members.forEach((member,index)=>{
+
+grid.innerHTML += `
+
+<div class="member-card">
+
+<div class="avatar">
+${member.name.charAt(0).toUpperCase()}
+</div>
+
+<h3>${member.name}</h3>
+
+<p>${member.role}</p>
+
+<div class="actions">
+
+<button
+class="edit-btn"
+onclick="editMember(${index})">
+Edit
+</button>
+
+<button
+class="delete-btn"
+onclick="deleteMember(${index})">
+Delete
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+function addMember(){
+
+const name =
+prompt("Enter member name:");
+
+if(!name) return;
+
+const role =
+prompt("Enter member role:");
+
+members.push({
+
+name:name,
+role:role || "Team Member"
+
+});
+
+saveMembers();
+renderMembers();
+
+}
+
+function editMember(index){
+
+const newName =
+prompt(
+"Edit Name:",
+members[index].name
+);
+
+if(newName === null) return;
+
+const newRole =
+prompt(
+"Edit Role:",
+members[index].role
+);
+
+if(newRole === null) return;
+
+members[index].name = newName;
+members[index].role = newRole;
+
+saveMembers();
+renderMembers();
+
+}
+
+function deleteMember(index){
+
+if(confirm("Delete member?")){
+
+members.splice(index,1);
+
+saveMembers();
+renderMembers();
+
+}
+
+}
+
+document
+.getElementById("searchInput")
+.addEventListener("keyup",function(){
+
+const value =
+this.value.toLowerCase();
+
+const cards =
+document.querySelectorAll(".member-card");
+
+cards.forEach(card=>{
+
+const text =
+card.textContent.toLowerCase();
+
+card.style.display =
+text.includes(value)
+? "block"
+: "none";
+
+});
+
+});
+
+renderMembers();
+
+</script>
+
+</body>
+</html>
