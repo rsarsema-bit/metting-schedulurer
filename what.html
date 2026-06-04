@@ -1,131 +1,219 @@
-<!doctype html>
+```html
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Schedule Meeting</title>
 
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Segoe UI", sans-serif;
-      }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProMeet | Schedule Meeting</title>
 
-      body {
-       background-image: url("mine.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        padding: 190px;
-    
-      }
+    <link rel="stylesheet" href="style.css">
+</head>
 
-      .container {
-        width: 100%;
-        max-width: 500px;
-        padding: 20px;
-      }
+<body>
 
-      .form-box {
-        background: rgba(230, 230, 230, 0.61);
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      }
+    <!-- Mobile Hamburger -->
 
-      h1 {
-        margin-bottom: 20px;
-        color: #333;
-        text-align: center;
-      }
+    <input type="checkbox" id="menu-toggle">
 
-      input,
-      select {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-      }
+    <label for="menu-toggle" class="hamburger">
+        ☰
+    </label>
 
-      button {
-        width: 100%;
-        padding: 12px;
-        background: #4f46e5;
-        color: rgba(255, 255, 255, 0.329);
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-      }
-
-      button:hover {
-        background: #4338ca;
-      }
-    </style>
-  </head>
-
-  <body>
     <div class="container">
-      <div class="form-box">
-        <h1>Schedule Meeting</h1>
 
-        <input type="text" id="title" placeholder="Meeting Title" />
+        <!-- Sidebar -->
 
-        <input type="date" id="date" />
+        <aside class="sidebar">
 
-        <input type="time" id="time" />
+            <div class="logo">
+                <h2>🚀 ProMeet</h2>
+                <p>Professional Meeting Scheduler</p>
+            </div>
 
-        <select id="status">
-          <option value="Scheduled">Scheduled</option>
-          <option value="Completed">Completed</option>
-        </select>
+            <ul>
 
-        <button onclick="addMeeting()">Schedule Meeting</button>
-      </div>
+                <li>
+                    <a href="index.html">
+                        🏠 Home
+                    </a>
+                </li>
+
+                <li class="active">
+                    <a href="schedulemeeting.html">
+                        📅 Schedule Meeting
+                    </a>
+                </li>
+
+                <li>
+                    <a href="todaysme.html">
+                        🕒 Today's Meetings
+                    </a>
+                </li>
+
+                <li>
+                    <a href="members.html">
+                        👥 Team Members
+                    </a>
+                </li>
+
+                <li>
+                    <a href="ccc.html">
+                        🗓 Calendar
+                    </a>
+                </li>
+
+                <li>
+                    <a href="settings.html">
+                        ⚙ Settings
+                    </a>
+                </li>
+
+                <li>
+                    <a href="about.html">
+                        ℹ About
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="sidebar-footer">
+                <small>© 2026 ProMeet</small>
+            </div>
+
+        </aside>
+
+        <!-- Main Content -->
+
+        <main class="main-content">
+
+            <header>
+                <h1>📅 Schedule Meeting</h1>
+                <p>
+                    Organize your meetings and keep your team connected.
+                </p>
+            </header>
+
+            <section class="meeting-form">
+
+                <h2>New Meeting</h2>
+
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="Meeting Title">
+
+                <input
+                    type="date"
+                    id="date">
+
+                <input
+                    type="time"
+                    id="time">
+
+                <input
+                    type="text"
+                    id="participants"
+                    placeholder="Participants">
+
+                <select id="status">
+
+                    <option value="Scheduled">
+                        Scheduled
+                    </option>
+
+                    <option value="Completed">
+                        Completed
+                    </option>
+
+                </select>
+
+                <button onclick="addMeeting()">
+                    Schedule Meeting
+                </button>
+
+            </section>
+
+        </main>
+
     </div>
 
     <script>
-      // Load existing meetings or empty array
-      let meetings = JSON.parse(localStorage.getItem("meetings")) || [];
 
-      // Save function
-      function saveMeetings() {
-        localStorage.setItem("meetings", JSON.stringify(meetings));
-      }
+        let meetings =
+            JSON.parse(
+                localStorage.getItem("meetings")
+            ) || [];
 
-      // Add meeting ONLY (no display here)
-      function addMeeting() {
-        const title = document.getElementById("title").value;
-        const date = document.getElementById("date").value;
-        const time = document.getElementById("time").value;
-        const status = document.getElementById("status").value;
+        function saveMeetings() {
 
-        if (!title || !date || !time) {
-          alert("Please fill all fields");
-          return;
+            localStorage.setItem(
+                "meetings",
+                JSON.stringify(meetings)
+            );
+
         }
 
-        // Add to storage
-        meetings.push({
-          title,
-          date,
-          time,
-          status,
-        });
+        function addMeeting() {
 
-        // Save to localStorage (this is what connects to total-meetings page)
-        saveMeetings();
+            const title =
+                document.getElementById("title").value;
 
-        // Clear inputs
-        document.getElementById("title").value = "";
-        document.getElementById("date").value = "";
-        document.getElementById("time").value = "";
+            const date =
+                document.getElementById("date").value;
 
-        alert("Meeting scheduled successfully!");
-      }
+            const time =
+                document.getElementById("time").value;
+
+            const participants =
+                document.getElementById("participants").value;
+
+            const status =
+                document.getElementById("status").value;
+
+            if (!title || !date || !time) {
+
+                alert(
+                    "Please fill all required fields."
+                );
+
+                return;
+
+            }
+
+            meetings.push({
+
+                id: Date.now(),
+
+                title: title,
+
+                date: date,
+
+                time: time,
+
+                participants: participants,
+
+                status: status
+
+            });
+
+            saveMeetings();
+
+            document.getElementById("title").value = "";
+            document.getElementById("date").value = "";
+            document.getElementById("time").value = "";
+            document.getElementById("participants").value = "";
+            document.getElementById("status").value = "Scheduled";
+
+            alert(
+                "✅ Meeting scheduled successfully!"
+            );
+
+        }
+
     </script>
-  </body>
+
+</body>
+
 </html>
+```

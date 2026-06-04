@@ -1,82 +1,135 @@
-```javascript id="nm8d2r"
+```javascript
 let meetings = JSON.parse(localStorage.getItem("meetings")) || [];
 
-function saveMeetings(){
-  localStorage.setItem("meetings", JSON.stringify(meetings));
+function saveMeetings() {
+    localStorage.setItem("meetings", JSON.stringify(meetings));
 }
 
-function addMeeting(){
+function addMeeting() {
 
-  const title = document.getElementById("title").value;
-  const description = document.getElementById("description").value;
-  const date = document.getElementById("date").value;
-  const time = document.getElementById("time").value;
-  const participants = document.getElementById("participants").value;
+    const title = document.getElementById("title").value.trim();
+    const date = document.getElementById("date").value;
+    const time = document.getElementById("time").value;
+    const participants = document.getElementById("participants").value.trim();
 
-  if(!title || !date || !time){
-    alert("Please fill all required fields");
-    return;
-  }
+    if (title === "") {
+        alert("Please enter a meeting title.");
+        return;
+    }
 
-  const meeting = {
-    title,
-    description,
-    date,
-    time,
-    participants
-  };
+    if (date === "") {
+        alert("Please select a date.");
+        return;
+    }
 
-  meetings.push(meeting);
+    if (time === "") {
+        alert("Please select a time.");
+        return;
+    }
 
-  saveMeetings();
+    const meeting = {
+        id: Date.now(),
+        title,
+        date,
+        time,
+        participants,
+        status: "Scheduled"
+    };
 
-  displayMeetings();
+    meetings.push(meeting);
 
-  clearForm();
+    saveMeetings();
+
+    if (document.getElementById("meetingsContainer")) {
+        displayMeetings();
+    }
+
+    clearForm();
+
+    alert("✅ Meeting scheduled successfully!");
 }
 
-function displayMeetings(){
+function deleteMeeting(id) {
 
-  const container = document.getElementById("meetingsContainer");
+    meetings = meetings.filter(
+        meeting => meeting.id !== id
+    );
 
-  if(!container) return;
+    saveMeetings();
 
-  container.innerHTML = "";
-
-  meetings.forEach((meeting)=>{
-
-    container.innerHTML += 
-      <div class="meeting-card">
-
-        <h3>${meeting.title}</h3>
-
-        <p>${meeting.description}</p>
-
-        <p><strong>Date:</strong> ${meeting.date}</p>
-
-        <p><strong>Time:</strong> ${meeting.time}</p>
-
-        <p><strong>Participants:</strong> ${meeting.participants}</p>
-
-        <span class="tag">Scheduled</span>
-
-      </div>
-    ;
-  });
+    if (document.getElementById("meetingsContainer")) {
+        displayMeetings();
+    }
 }
 
-function clearForm(){
+function displayMeetings() {
 
-  document.getElementById("title").value = "";
-  document.getElementById("description").value = "";
-  document.getElementById("date").value = "";
-  document.getElementById("time").value = "";
-  document.getElementById("participants").value = "";
+    const container =
+        document.getElementById("meetingsContainer");
+
+    if (!container) return;
+
+    if (meetings.length === 0) {
+
+        container.innerHTML = 
+            <div class="meeting-card">
+                <h3>📅 No Meetings Yet</h3>
+                <p>Create your first meeting to get started.</p>
+            </div>
+        `;
+
+        return;
+    
+
+    container.innerHTML = "";
+
+    meetings.forEach((meeting, index) => {
+
+        container.innerHTML += `
+            <div class="meeting-card" style="animation:fadeIn .5s ease ${index * 0.1}s both;">
+
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+
+                    <h3>📌 ${meeting.title}</h3>
+
+                    <button
+                        onclick="deleteMeeting(${meeting.id})"
+                        style="
+                            width:auto;
+                            padding:8px 14px;
+                            background:#ef4444;
+                            border:none;
+                            border-radius:8px;
+                            color:white;
+                            cursor:pointer;">
+                        Delete
+                    </button>
+
+                </div>
+
+                <p><strong>📅 Date:</strong> ${meeting.date}</p>
+
+                <p><strong>🕒 Time:</strong> ${meeting.time}</p>
+
+                <p><strong>👥 Participants:</strong> ${meeting.participants || "Not specified"}</p>
+
+                <div style="margin-top:15px;">
+                    <span class="tag">
+                        ${meeting.status}
+                    </span>
+                </div>
+
+            </div>
+        `;
+    });
+
+
+function clearForm() {
+    document.getElementById("title").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("time").value = "";
+    document.getElementById("participants").value = "";
 }
 
 displayMeetings();
-```
-
-
-
 

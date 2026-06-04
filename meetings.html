@@ -1,88 +1,130 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meetings</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProMeet | Meetings</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="container">
+    <!-- Mobile Hamburger -->
+    <input type="checkbox" id="menu-toggle">
 
-  <aside class="sidebar">
+    <label for="menu-toggle" class="hamburger">
+        ☰
+    </label>
 
-    <h2>ProMeet</h2>
+    <div class="container">
 
-    <ul>
-      <li>
-        <a href="index.html">Dashboard</a>
-      </li>
+        <!-- Sidebar -->
+        <aside class="sidebar">
 
-      <li class="active">
-        <a href="meeting.html">Meetings</a>
-      </li>
+            <div class="logo">
+                <h2>🚀 ProMeet</h2>
+                <p>Professional Meeting Scheduler</p>
+            </div>
 
-      <li>
-        <a href="calandar.html">Calendar</a>
-      </li>
+            <ul>
 
-      <li>
-        <a href="settings.html">Settings</a>
-      </li>
-    </ul>
+                <li>
+                    <a href="index.html">
+                        🏠 Home
+                    </a>
+                </li>
 
-  </aside>
+                <li class="active">
+                    <a href="meeting.html">
+                        📅 Meetings
+                    </a>
+                </li>
 
-  <main class="main-content">
+                <li>
+                    <a href="calandar.html">
+                        🗓 Calendar
+                    </a>
+                </li>
 
-    <header>
-      <h1>Meetings</h1>
-      <p>Schedule and manage meetings.</p>
-    </header>
+                <li>
+                    <a href="settings.html">
+                        ⚙ Settings
+                    </a>
+                </li>
 
-    <section class="meeting-form">
+            </ul>
 
-      <h2>Schedule Meeting</h2>
+            <div class="sidebar-footer">
+                <small>© 2026 ProMeet</small>
+            </div>
 
-      <input type="text" id="title" placeholder="Meeting Title">
+        </aside>
 
-      <textarea id="description" placeholder="Meeting Description"></textarea>
+        <!-- Main Content -->
+        <main class="main-content">
 
-      <div class="row">
+            <header>
+                <h1>📅 Meetings</h1>
+                <p>
+                    Schedule, organize, and manage your professional meetings.
+                </p>
+            </header>
 
-        <input type="date" id="date">
+            <section class="meeting-form">
 
-        <input type="time" id="time">
+                <h2>Schedule Meeting</h2>
 
-      </div>
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="Meeting Title">
 
-      <input type="text" id="participants" placeholder="Participants Emails">
+                <textarea
+                    id="description"
+                    placeholder="Meeting Description"></textarea>
 
-      <button onclick="addMeeting()">
-        Schedule Meeting
-      </button>
+                <div class="row">
 
-    </section>
+                    <input
+                        type="date"
+                        id="date">
 
-    <section class="meeting-list">
+                    <input
+                        type="time"
+                        id="time">
 
-      <h2>Upcoming Meetings</h2>
+                </div>
 
-      <div id="meetingsContainer"></div>
+                <input
+                    type="text"
+                    id="participants"
+                    placeholder="Participants Emails">
 
-    </section>
+                <button onclick="addMeeting()">
+                    Schedule Meeting
+                </button>
 
-  </main>
+            </section>
 
-</div>
+            <section class="meeting-list">
 
-<script src="script.js"></script>
+                <h2>Upcoming Meetings</h2>
+
+                <div id="meetingsContainer"></div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
 
 </body>
-</html>
-```
 
+</html>
 ```
 

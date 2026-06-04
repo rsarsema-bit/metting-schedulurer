@@ -1,397 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Team Members</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProMeet | Team Members</title>
 
-<style>
-    nav { position: relative; }
-.hamburger {
-  width:40px; height:36px; display:flex; flex-direction:column;
-  justify-content:space-between; background:none; border:0; cursor:pointer;
-  padding:6px;
-}
-.bar {
-  display:block; height:4px; background:#111; border-radius:2px; transition:transform .25s, opacity .25s;
-}
-/* menu */
-.menu { list-style:none; margin:8px 0 0 0; padding:0; background:#fff; box-shadow:0 4px 12px rgba(0,0,0,.08); }
-.menu li a { display:block; padding:10px 14px; text-decoration:none; color:#111; }
+    <link rel="stylesheet" href="style.css">
 
-/* open state: animate hamburger to X and show menu */
-.hamburger.open .bar:nth-child(1) { transform: translateY(10px) rotate(45deg); }
-.hamburger.open .bar:nth-child(2) { opacity:0; }
-.hamburger.open .bar:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
-.menu[hidden] { display:none; }
-.menu.open { display:block; }
+    <style>
 
+        .controls{
+            display:flex;
+            gap:15px;
+            margin-bottom:25px;
+            flex-wrap:wrap;
+        }
 
+        .controls input{
+            flex:1;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
-}
+        .member-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+            gap:20px;
+        }
 
-body{
-     background-image: url("yours.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        padding: 120px;
-    
-}
+        .member-card{
+            background:rgba(255,255,255,.12);
+            backdrop-filter:blur(10px);
+            border:1px solid rgba(255,255,255,.15);
+            border-radius:18px;
+            padding:25px;
+            text-align:center;
+            transition:.3s;
+            color:white;
+        }
 
-.container{
-    max-width:1200px;
-    margin:auto;
-}
+        .member-card:hover{
+            transform:translateY(-8px);
+            box-shadow:0 0 25px rgba(96,165,250,.5);
+        }
 
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-bottom:25px;
-}
+        .avatar{
+            width:85px;
+            height:85px;
+            margin:auto;
+            border-radius:50%;
+            background:#2563eb;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-size:32px;
+            font-weight:bold;
+            margin-bottom:15px;
+            box-shadow:0 0 20px rgba(59,130,246,.6);
+        }
 
-h1{
-    color:#000000f1;
-}
+        .member-card h3{
+            margin-bottom:8px;
+        }
 
-.stats{
-    background:#00000000;
-    color:rgba(20, 9, 9, 0);
-    padding:12px 20px;
-    border-radius:10px;
-    font-weight:bold;
-}
+        .member-card p{
+            color:#dbeafe;
+            margin-bottom:20px;
+        }
 
-.controls{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-bottom:25px;
-}
+        .actions{
+            display:flex;
+            gap:10px;
+        }
 
-input{
-    flex:1;
-    min-width:250px;
-    padding:12px;
-    border:1px solid #040404;
-    border-radius:8px;
-}
+        .edit-btn{
+            background:#f59e0b;
+        }
 
-button{
-    border:none;
-    padding:12px 18px;
-    border-radius:8px;
-    cursor:pointer;
-    color:rgb(255, 251, 251);
-}
+        .delete-btn{
+            background:#ef4444;
+        }
 
-.add-btn{
-    background:#10b981;
-}
+        @media(max-width:900px){
 
-.edit-btn{
-    background:#322619;
-}
+            .controls{
+                flex-direction:column;
+            }
 
-.delete-btn{
-    background:#322222;
-}
+            .actions{
+                flex-direction:column;
+            }
 
-.member-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
-}
+        }
 
-.member-card{
-    background:rgba(59, 23, 23, 0.507);
-    border-radius:15px;
-    padding:25px;
-    text-align:center;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
-    transition:.3s;
-}
+    </style>
 
-.member-card:hover{
-    transform:translateY(-5px);
-}
-
-.avatar{
-    width:80px;
-    height:80px;
-    margin:auto;
-    border-radius:50%;
-    background:#4f46e5;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:30px;
-    font-weight:bold;
-    margin-bottom:15px;
-}
-
-.member-card h3{
-    color:#fffefe;
-    margin-bottom:8px;
-}
-
-.member-card p{
-    color:#d1a7a7;
-    margin-bottom:15px;
-}
-
-.actions{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-@media(max-width:768px){
-
-.controls{
-    flex-direction:column;
-}
-
-input,
-button{
-    width:100%;
-}
-
-}
-
-</style>
 </head>
 
 <body>
-    
-  
 
-<div class="container">
+    <!-- Mobile Hamburger -->
 
-<div class="header">
+    <input type="checkbox" id="menu-toggle">
 
-<h1>Team Members</h1>
+    <label for="menu-toggle" class="hamburger">
+        ☰
+    </label>
 
-<div class="stats">
-Total Members:
-<span id="memberCount">0</span>
-</div>
+    <div class="container">
 
-</div>
+        <!-- Sidebar -->
 
-<div class="controls">
+        <aside class="sidebar">
 
-<input
-type="text"
-id="searchInput"
-placeholder="Search member...">
+            <div class="logo">
+                <h2>🚀 ProMeet</h2>
+                <p>Professional Meeting Scheduler</p>
+            </div>
 
-<button
-class="add-btn"
-onclick="addMember()">
-Add Member
-</button>
+            <ul>
 
-</div>
+                <li>
+                    <a href="index.html">
+                        🏠 Home
+                    </a>
+                </li>
 
-<div
-class="member-grid"
-id="memberGrid">
-</div>
+                <li>
+                    <a href="schedulemeeting.html">
+                        📅 Schedule Meeting
+                    </a>
+                </li>
 
-</div>
+                <li>
+                    <a href="todaysme.html">
+                        🕒 Today's Meetings
+                    </a>
+                </li>
+
+                <li class="active">
+                    <a href="members.html">
+                        👥 Team Members
+                    </a>
+                </li>
+
+                <li>
+                    <a href="ccc.html">
+                        🗓 Calendar
+                    </a>
+                </li>
 
+                <li>
+                    <a href="settings.html">
+                        ⚙ Settings
+                    </a>
+                </li>
 
+                <li>
+                    <a href="about.html">
+                        ℹ About
+                    </a>
+                </li>
 
+            </ul>
 
-<script>
+            <div class="sidebar-footer">
+                <small>© 2026 ProMeet</small>
+            </div>
 
-if(!localStorage.getItem("members")){
+        </aside>
 
-localStorage.setItem(
-"members",
-JSON.stringify([
-{
-name:"Arsema",
-role:"Project Manager"
-},
-{
-name:"Alemtsahay",
-role:"Frontend Developer"
-},
-{
-name:"Aster",
-role:"UI/UX Designer"
-},
-{
-name:"Biftu",
-role:"Backend Developer"
-}
-])
-);
+        <!-- Main Content -->
 
-}
+        <main class="main-content">
 
-let members =
-JSON.parse(
-localStorage.getItem("members")
-);
+            <header>
+                <h1>👥 Team Members</h1>
+                <p>
+                    Manage your team and collaborate effectively.
+                </p>
+            </header>
 
-function saveMembers(){
+            <div class="meeting-list">
 
-localStorage.setItem(
-"members",
-JSON.stringify(members)
-);
+                <div class="controls">
 
-}
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search member...">
 
-function renderMembers(){
+                    <button onclick="addMember()">
+                        ➕ Add Member
+                    </button>
 
-const grid =
-document.getElementById("memberGrid");
+                </div>
 
-grid.innerHTML = "";
+                <h3 style="margin-bottom:20px;">
+                    Total Members:
+                    <span id="memberCount">0</span>
+                </h3>
 
-document.getElementById("memberCount")
-.textContent = members.length;
+                <div
+                    class="member-grid"
+                    id="memberGrid">
+                </div>
 
-members.forEach((member,index)=>{
+            </div>
 
-grid.innerHTML += `
+        </main>
 
-<div class="member-card">
+    </div>
 
-<div class="avatar">
-${member.name.charAt(0).toUpperCase()}
-</div>
+    <script>
 
-<h3>${member.name}</h3>
+        if (!localStorage.getItem("members")) {
 
-<p>${member.role}</p>
+            localStorage.setItem(
+                "members",
+                JSON.stringify([
+                    {
+                        name: "Arsema",
+                        role: "Project Manager"
+                    },
+                    {
+                        name: "Alemtsahay",
+                        role: "Frontend Developer"
+                    },
+                    {
+                        name: "Aster",
+                        role: "UI/UX Designer"
+                    },
+                    {
+                        name: "Biftu",
+                        role: "Backend Developer"
+                    }
+                ])
+            );
 
-<div class="actions">
+        }
 
-<button
-class="edit-btn"
-onclick="editMember(${index})">
-Edit
-</button>
+        let members =
+            JSON.parse(
+                localStorage.getItem("members")
+            );
 
-<button
-class="delete-btn"
-onclick="deleteMember(${index})">
-Delete
-</button>
+        function saveMembers() {
 
-</div>
+            localStorage.setItem(
+                "members",
+                JSON.stringify(members)
+            );
 
-</div>
+        }
 
-`;
+        function renderMembers() {
 
-});
+            const grid =
+                document.getElementById("memberGrid");
 
-}
+            grid.innerHTML = "";
 
-function addMember(){
+            document.getElementById(
+                "memberCount"
+            ).textContent = members.length;
 
-const name =
-prompt("Enter member name:");
+            members.forEach((member, index) => {
 
-if(!name) return;
+                grid.innerHTML += `
 
-const role =
-prompt("Enter member role:");
+                <div class="member-card">
 
-members.push({
+                    <div class="avatar">
+                        ${member.name.charAt(0).toUpperCase()}
+                    </div>
 
-name:name,
-role:role || "Team Member"
+                    <h3>${member.name}</h3>
 
-});
+                    <p>${member.role}</p>
 
-saveMembers();
-renderMembers();
+                    <div class="actions">
 
-}
+                        <button
+                        class="edit-btn"
+                        onclick="editMember(${index})">
+                        Edit
+                        </button>
 
-function editMember(index){
+                        <button
+                        class="delete-btn"
+                        onclick="deleteMember(${index})">
+                        Delete
+                        </button>
 
-const newName =
-prompt(
-"Edit Name:",
-members[index].name
-);
+                    </div>
 
-if(newName === null) return;
+                </div>
 
-const newRole =
-prompt(
-"Edit Role:",
-members[index].role
-);
+                `;
 
-if(newRole === null) return;
+            });
 
-members[index].name = newName;
-members[index].role = newRole;
+        }
 
-saveMembers();
-renderMembers();
+        function addMember() {
 
-}
+            const name =
+                prompt("Enter member name:");
 
-function deleteMember(index){
+            if (!name) return;
 
-if(confirm("Delete member?")){
+            const role =
+                prompt("Enter member role:");
 
-members.splice(index,1);
+            members.push({
+                name: name,
+                role: role || "Team Member"
+            });
 
-saveMembers();
-renderMembers();
+            saveMembers();
+            renderMembers();
 
-}
+        }
 
-}
+        function editMember(index) {
 
-document
-.getElementById("searchInput")
-.addEventListener("keyup",function(){
+            const newName =
+                prompt(
+                    "Edit Name:",
+                    members[index].name
+                );
 
-const value =
-this.value.toLowerCase();
+            if (newName === null) return;
 
-const cards =
-document.querySelectorAll(".member-card");
+            const newRole =
+                prompt(
+                    "Edit Role:",
+                    members[index].role
+                );
 
-cards.forEach(card=>{
+            if (newRole === null) return;
 
-const text =
-card.textContent.toLowerCase();
+            members[index].name = newName;
+            members[index].role = newRole;
 
-card.style.display =
-text.includes(value)
-? "block"
-: "none";
+            saveMembers();
+            renderMembers();
 
-});
+        }
 
-});
+        function deleteMember(index) {
 
-renderMembers();
+            if (confirm("Delete member?")) {
 
-</script>
+                members.splice(index, 1);
+
+                saveMembers();
+                renderMembers();
+
+            }
+
+        }
+
+        document
+            .getElementById("searchInput")
+            .addEventListener(
+                "keyup",
+                function () {
+
+                    const value =
+                        this.value.toLowerCase();
+
+                    document
+                        .querySelectorAll(".member-card")
+                        .forEach(card => {
+
+                            card.style.display =
+                                card.textContent
+                                .toLowerCase()
+                                .includes(value)
+                                ? "block"
+                                : "none";
+
+                        });
+
+                }
+            );
+
+        renderMembers();
+
+    </script>
 
 </body>
+
 </html>

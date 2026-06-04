@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truthiness & Falseness of value</title>
+</head>
+<body>
+    <h1>Truthiness & Falseness of value</h1>
+    <p>In JavaScript, values can be classified as either "truthy" or "falsy" based on how they are evaluated in a boolean context. A value is considered "truthy" if it evaluates to true when used in a conditional statement, while a value is considered "falsy" if it evaluates to false.</p>
+    <p>Here are some examples of truthy and falsy values:</p>
+    <ul>
+        <li><strong>Truthy values:</strong> "hello", 42, true, [], {}</li>
+        <li><strong>Falsy values:</strong> false, 0, -0, 0n, "", null, undefined, NaN</li>
+    </ul>
+    <p>When a value is used in a conditional statement, JavaScript will automatically convert it to a boolean. For example:</p>
+    <script>
+        let value1 = "hello";
+        let value2 = 0;
+
+        if (value1) {
+            console.log("value1 is truthy");
+        } else {
+            console.log("value1 is falsy");
+        }
+
+        if (value2) {
+            console.log("value2 is truthy");
+        } else {
+            console.log("value2 is falsy");
+        }
+    </script>
+</body>
+</html>

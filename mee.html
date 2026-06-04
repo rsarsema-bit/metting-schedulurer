@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Total Meetings</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    padding:20px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+h1{
+    color:#333;
+}
+
+.controls{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+input{
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+button{
+    background:#4f46e5;
+    color:white;
+    border:none;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#4338ca;
+}
+
+.table-container{
+    background:white;
+    border-radius:15px;
+    overflow-x:auto;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#4f46e5;
+    color:white;
+    padding:15px;
+    text-align:left;
+}
+
+td{
+    padding:15px;
+    border-bottom:1px solid #eee;
+}
+
+.action-btn{
+    padding:8px 12px;
+    margin-right:5px;
+}
+
+.edit{
+    background:#10b981;
+}
+
+.delete{
+    background:#ef4444;
+}
+
+.empty{
+    text-align:center;
+    padding:30px;
+    color:#777;
+}
+
+@media(max-width:768px){
+
+.header{
+    flex-direction:column;
+    align-items:stretch;
+}
+
+.controls{
+    flex-direction:column;
+}
+
+input,button{
+    width:100%;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>Total Meetings</h1>
+
+<div class="controls">
+
+<input
+type="text"
+id="search"
+placeholder="Search meetings...">
+
+<button onclick="addMeeting()">
+Add Meeting
+</button>
+
+</div>
+
+</div>
+
+<div class="table-container">
+
+<table>
+
+<thead>
+<tr>
+<th>Title</th>
+<th>Date</th>
+<th>Time</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="meetingTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+let meetings =
+JSON.parse(localStorage.getItem("meetings")) || [
+
+{
+title:"Project Review",
+date:"2026-06-01",
+time:"10:00",
+status:"Scheduled"
+},
+
+{
+title:"Client Meeting",
+date:"2026-06-02",
+time:"14:00",
+status:"Scheduled"
+}
+
+];
+
+saveData();
+renderMeetings();
+
+function saveData(){
+
+localStorage.setItem(
+"meetings",
+JSON.stringify(meetings)
+);
+
+}
+
+function renderMeetings(){
+
+const table =
+document.getElementById("meetingTable");
+
+table.innerHTML = "";
+
+if(meetings.length === 0){
+
+table.innerHTML = `
+<tr>
+<td colspan="5" class="empty">
+No meetings found
+</td>
+</tr>
+`;
+
+return;
+}
+
+meetings.forEach((meeting,index)=>{
+
+table.innerHTML += `
+
+<tr>
+
+<td>${meeting.title}</td>
+
+<td>${meeting.date}</td>
+
+<td>${meeting.time}</td>
+
+<td>${meeting.status}</td>
+
+<td>
+
+<button
+class="action-btn edit"
+onclick="editMeeting(${index})">
+Edit
+</button>
+
+<button
+class="action-btn delete"
+onclick="deleteMeeting(${index})">
+Delete
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+function addMeeting(){
+
+const title =
+prompt("Meeting Title:");
+
+if(!title) return;
+
+const date =
+prompt("Meeting Date (YYYY-MM-DD):");
+
+if(!date) return;
+
+const time =
+prompt("Meeting Time (HH:MM):");
+
+if(!time) return;
+
+meetings.push({
+
+title,
+date,
+time,
+status:"Scheduled"
+
+});
+
+saveData();
+renderMeetings();
+
+}
+
+function editMeeting(index){
+
+const meeting = meetings[index];
+
+const title =
+prompt(
+"Edit Title:",
+meeting.title
+);
+
+if(title === null) return;
+
+const date =
+prompt(
+"Edit Date:",
+meeting.date
+);
+
+if(date === null) return;
+
+const time =
+prompt(
+"Edit Time:",
+meeting.time
+);
+
+if(time === null) return;
+
+const status =
+prompt(
+"Edit Status:",
+meeting.status
+);
+
+if(status === null) return;
+
+meetings[index] = {
+
+title,
+date,
+time,
+status
+
+};
+
+saveData();
+renderMeetings();
+
+}
+
+function deleteMeeting(index){
+
+if(
+confirm(
+"Delete this meeting?"
+)
+){
+
+meetings.splice(index,1);
+
+saveData();
+renderMeetings();
+
+}
+
+}
+
+document
+.getElementById("search")
+.addEventListener("keyup",function(){
+
+const value =
+this.value.toLowerCase();
+
+const rows =
+document.querySelectorAll(
+"#meetingTable tr"
+);
+
+rows.forEach(row=>{
+
+const text =
+row.textContent.toLowerCase();
+
+row.style.display =
+text.includes(value)
+? ""
+: "none";
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
