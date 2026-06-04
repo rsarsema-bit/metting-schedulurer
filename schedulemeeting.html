@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Schedule Meeting</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      body {
+       background-image: url("mine.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        padding: 190px;
+    
+      }
+
+      .container {
+        width: 100%;
+        max-width: 500px;
+        padding: 20px;
+      }
+
+      .form-box {
+        background: rgba(230, 230, 230, 0.61);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        color: #333;
+        text-align: center;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        background: #4f46e5;
+        color: rgba(255, 255, 255, 0.329);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background: #4338ca;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="form-box">
+        <h1>Schedule Meeting</h1>
+
+        <input type="text" id="title" placeholder="Meeting Title" />
+
+        <input type="date" id="date" />
+
+        <input type="time" id="time" />
+
+        <select id="status">
+          <option value="Scheduled"> Scheduled</option>
+          <option value="Completed"> Completed</option>
+        </select>
+
+        <button onclick="addMeeting()">Schedule Meeting</button>
+      </div>
+    </div>
+
+    <script>
+      // Load existing meetings or empty array
+      let meetings = JSON.parse(localStorage.getItem("meetings")) || [];
+
+      // Save function
+      function saveMeetings() {
+        localStorage.setItem("meetings", JSON.stringify(meetings));
+      }
+
+      // Add meeting ONLY (no display here)
+      function addMeeting() {
+        const title = document.getElementById("title").value;
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+        const status = document.getElementById("status").value;
+
+        if (!title || !date || !time) {
+          alert("Please fill all fields");
+          return;
+        }
+
+        // Add to storage
+        meetings.push({
+          title,
+          date,
+          time,
+          status,
+        });
+
+        // Save to localStorage (this is what connects to total-meetings page)
+        saveMeetings();
+
+        // Clear inputs
+        document.getElementById("title").value = "";
+        document.getElementById("date").value = "";
+        document.getElementById("time").value = "";
+
+        alert("Meeting scheduled successfully!");
+      }
+    </script>
+  </body>
+</html>
