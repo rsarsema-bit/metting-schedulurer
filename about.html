@@ -1,80 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About ProMeet</title>
-  <link rel="stylesheet" href="style.css">
+  <title>About - Meeting Scheduler</title>
+
+  <style>
+
+    body{
+        background-image: url("OIP.webp");
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #00000039;
+      color: #fffbfbd5;
+    }
+
+    header{
+      background-color: #eaeaea13;
+      color: rgba(18, 146, 231, 0.668);
+      text-align: center;
+      padding: 20px;
+    }
+
+    nav a{
+      color: rgba(227, 245, 255, 0);
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+
+    .container{
+      width: 80%;
+      margin: auto;
+      padding: 40px 0;
+    }
+
+    .section{
+      background: rgba(26, 24, 24, 0.177);
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(255, 252, 252, 0.914);
+    }
+
+    h1, h2{
+      color: #ac9696;
+    }
+
+    ul{
+      padding-left: 20px;
+    }
+
+    footer{
+      background-color: #ffffff;
+      color: rgb(7, 1, 1);
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+
+  </style>
 </head>
 
 <body>
 
+  <header>
+    <h1>Meeting Scheduler</h1>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
   <div class="container">
 
-    <aside class="sidebar" id="sidebar">
-      
-      <div class="sidebar-profile">
-        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="User Profile" class="profile-img">
-        <div>
-          <h2>ProMeet</h2>
-          <span class="user-role">Admin Dashboard</span>
-        </div>
-      </div>
+    <div class="section">
+      <h2>About Us</h2>
 
-      <nav>
-        <ul>
-          <li><a href="index.html">Dashboard</a></li>
-          <li><a href="meetings.html">Meetings</a></li>
-          <li><a href="calendar.html">Calendar</a></li>
-          <li><a href="settings.html">Settings</a></li>
-          <li class="active"><a href="about.html">About</a></li>
-        </ul>
-      </nav>
-    </aside>
+      <p>
+        Welcome to our Meeting Scheduler platform, a simple and efficient solution created to make meeting management easier for everyone. Our company started with a small idea: solving the common problem of missed appointments, schedule conflicts, and time wasted while organizing meetings manually. What began as a simple project soon grew into a platform designed to help students, professionals, and organizations manage their time more effectively.
 
-    <main class="main-content">
+Our Meeting Scheduler allows users to create meetings, set dates and times, invite participants, and keep track of important events in one organized place. We believe that good communication and proper scheduling are key to productivity and success. That is why we focus on building a system that is user-friendly, reliable, and accessible to everyone.
 
-      <header>
-        <div class="header-top">
-          <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-          </button>
-          
-          <h1>About ProMeet</h1>
-        </div>
-        <p>Learn more about your smart scheduling platform.</p>
-      </header>
+Today, our goal is to continue improving the platform by providing smarter and more convenient scheduling solutions for people around the world. Whether you are planning team discussions, school activities, or business meetings, our Meeting Scheduler is here to help you stay organized and never miss an important moment.
 
-      <section class="meeting-list">
-        <h2>Our Mission</h2>
-        <p style="margin-top: 15px; line-height: 1.6; color: #4b5563;">
-          ProMeet is designed to streamline your professional calendar, allowing you to organize consultations, sync internal team meetings, and manage client dashboards seamlessly. Our goal is to reduce administrative friction so you can focus on building relationships.
-        </p>
-      </section>
+      </p>
+    </div>
 
-      <div class="row">
-        <div class="card" style="flex: 1;">
-          <h3 style="font-size: 1.5rem; margin-bottom: 10px;">Version</h3>
-          <p class="tag" style="margin-top: 0;">v1.2.0 Stable</p>
-          <p style="margin-top: 10px; font-size: 0.9rem; color: #6b7280;">Last updated: June 2026</p>
-        </div>
+    <div class="section">
+      <h2>Our Features</h2>
 
-        <div class="card" style="flex: 1;">
-          <h3 style="font-size: 1.5rem; margin-bottom: 10px;">Security</h3>
-          <p style="font-size: 0.9rem; color: #4b5563; line-height: 1.4;">
-            Equipped with secure data parsing and local hardware encryption syncing.
-          </p>
-        </div>
-      </div>
+      <ul>
+        <li>Easy meeting booking</li>
+        <li>Calendar management</li>
+        <li>Email notifications</li>
+        <li>Online meeting support</li>
+        <li>Time-saving scheduling tools</li>
+      </ul>
+    </div>
 
-    </main>
+    <div class="section">
+      <h2>Our Mission</h2>
+
+      <p>
+        Our mission is to make communication easier by providing
+        a fast and reliable meeting scheduling experience for everyone.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>How It Works</h2>
+
+      <ol>
+        <li>Create an account</li>
+        <li>Set your available times</li>
+        <li>Share your meeting link</li>
+        <li>Receive meeting requests</li>
+      </ol>
+    </div>
 
   </div>
 
-  <script src="script.js"></script>
-</body>
+  <footer>
+    <p>© 2026 Meeting Scheduler. All Rights Reserved.</p>
+  </footer>
 
+</body>
 </html>
